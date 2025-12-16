@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Student App</title>
+  </head>
+  <body>
+    <h2>Student Management</h2>
+    Name:<input id = "Name"><br><br>
+    Id:<input id = "ID"><br><br>
+    Age:<input id = "Age"><br><br>
+    Department:<input id = "Department"><br><br>
+    <button onclick="addStudent()">Add Student</button>
+    <br><br>
+Search by ID: <input id="searchId">
+<button onclick="searchStudent()">Search</button>
+<br><br>
+Delete by ID: <input id="deleteId">
+<button type="button" onclick="deleteStudent()">Delete</button>
+
+<p id="deleteResult"></p>
+
+
+<p id="searchResult"></p>
+
+    <h3>Students List</h3>
+    <div id ="output"></div>
+
+    <script>
+      let students =[];
+      function addStudent(){
+        let name = document.getElementById("Name").value;
+        let id = document.getElementById("ID").value;
+        let age = document.getElementById("Age").value;
+        let dept = document.getElementById("Department").value;
+      let student ={
+        name:name,
+        id:id,
+        age:age,
+        dept:dept
+
+      };
+      students.push(student);
+      showStudents();
+      clearInputs();    
+      }
+       function showStudents() {
+        let text = "";
+        for (let i = 0; i < students.length; i++) {
+            text += "ID: " + students[i].id +
+                    ", Name: " + students[i].name +
+                    ", Age: " + students[i].age +
+                    ", Dept: " + students[i].dept +
+                    "<br>";
+        }
+        document.getElementById("output").innerHTML = text;
+    }
+    function clearInputs() {
+    document.getElementById("Name").value = "";
+    document.getElementById("ID").value = "";
+    document.getElementById("Age").value = "";
+    document.getElementById("Department").value = "";
+}
+
+
+    function searchStudent() {
+    let searchId = document.getElementById("searchId").value;
+    let found = false;
+
+    for (let i = 0; i < students.length; i++) {
+        if (students[i].id === searchId) {
+            document.getElementById("searchResult").innerHTML =
+                "Found: " +
+                students[i].name + ", " +
+                students[i].age + ", " +
+                students[i].dept;
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        document.getElementById("searchResult").innerHTML =
+            "Student not found";
+    }
+}
+function deleteStudent() {
+    let deleteId = document.getElementById("deleteId").value;
+    let found = false;
+
+    for (let i = 0; i < students.length; i++) {
+        if (students[i].id === deleteId) {
+            students.splice(i, 1); // remove student
+            found = true;
+            break;
+        }
+    }
+
+    if (found) {
+        document.getElementById("deleteResult").innerHTML =
+            "Student deleted successfully";
+        showStudents();
+    } else {
+        document.getElementById("deleteResult").innerHTML =
+            "Student not found";
+    }
+
+    document.getElementById("deleteId").value = "";
+}
+
+
+    </script>
+    
+  </body>
+</html>
